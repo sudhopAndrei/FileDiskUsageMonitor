@@ -1,16 +1,21 @@
-sessions_dir="$HOME/sessions/"
-reports_dir="$HOME/reports/"
+script_dir="$HOME/File&DiskUsageMonitor"
+sessions_dir="${script_dir}/sessions"
+reports_dir="${script_dir}/reports"
 
 begin() {
+    if [ ! -d "$script_dir" ]; then
+        mkdir -p "$script_dir"
+    fi
+
     if [ ! -d "$sessions_dir" ]; then
         mkdir -p "$sessions_dir"
-        echo "Directorul $sessions_dir a fost creat"
     fi
 
     if [ ! -d "$reports_dir" ]; then
         mkdir -p "$reports_dir"
-        echo "Directorul $reports_dir a fost creat"
     fi
+
+    echo "Directoarele necesare au fost create"
 }
 
 record_session() {
@@ -42,6 +47,8 @@ record_session() {
         echo "Disk":
         df -h
     } > "$sesh_file"
+
+    echo "Sesiunea a fost inregistrata cu succes in ${target_sesh}"
 }
 
 compare_sessions() {
@@ -94,6 +101,8 @@ compare_sessions() {
      } >> "$report_file"
 
      rm /tmp/ls1.txt /tmp/ls2.txt /tmp/df1.txt /tmp/df2.txt /tmp/ls_diff.txt /tmp/df_diff.txt
+
+     echo "Raportul a fost generat cu succes in ${reports_dir}"
 }
 
 menu() {
