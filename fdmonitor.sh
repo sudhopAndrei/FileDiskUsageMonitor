@@ -23,7 +23,7 @@ record_session() {
 
     if [ ! -d "$folder" ]; then
         echo "Directorul nu exista"
-        return
+        return 1
     fi
 
     folder_name=$(basename "${folder}")
