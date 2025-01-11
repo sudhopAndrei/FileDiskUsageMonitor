@@ -34,7 +34,7 @@ record_session() {
     cd ../
     sesh_file="${target_sesh}/session_${count}.txt"
     {
-        echo "$(date +%d/%m/%Y %H:%M:%S)"
+        echo "$(date +%d/%m/%Y_%T)"
         echo
         echo "Files":
         ls -l "$folder"
@@ -45,20 +45,22 @@ record_session() {
 }
 
 compare_sessions() {
-    read -p "Sesiunea 1: " file1
+    read -p "Sesiunea 1: " file1_name
+    file1="${sessions_dir}/${file1_name}"
     if [ ! -f "$file1" ]; then
         echo "Sesiunea nu exista"
         return 1
     fi
 
-    read -p "Sesiunea 2: " file2
+    read -p "Sesiunea 2: " file2_name
+    file2="${sessions_dir}/${file2_name}"
     if [ ! -f "$file2" ]; then
         echo "Sesiunea nu exista"
         return 1
     fi
 
-    grep -A 1000 "Files:" "$file1" | grep -v "Disk:" > /tmp/ls1.txt
-    grep -A 1000 "Files:" "$file2" | grep -v "Disk:" > /tmp/ls2.txt
+    grep -A 1000 "Files:" "$file1" | grep -B 1000 "Disk:" | grep -v "Disk:" | grep -v "Files:" > /tmp/ls1.txt
+    grep -A 1000 "Files:" "$file2" | grep -B 1000 "Disk:" | grep -v "Disk:" | grep -v "Files:" > /tmp/ls2.txt
 
     diff -u /tmp/ls1.txt /tmp/ls2.txt > /tmp/ls_diff.txt
 
@@ -74,7 +76,7 @@ compare_sessions() {
     report_file="${reports_dir}/report_${count}.txt"
 
     {
-        echo "Raport intre ${file1} si ${file2}"
+        echo "Raport intre ${file1_name} si ${file2_name}"
         echo
         echo "Modificari fisiere:"
         if [ -s /tmp/ls_diff.txt ]; then
