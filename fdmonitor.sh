@@ -92,6 +92,8 @@ compare_sessions() {
             echo "Nu exista modificari"
         fi
      } >> "$report_file"
+
+     rm /tmp/ls1.txt /tmp/ls2.txt /tmp/df1.txt /tmp/df2.txt /tmp/ls_diff.txt /tmp/df_diff.txt
 }
 
 menu() {
