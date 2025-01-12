@@ -27,17 +27,17 @@ record_session() {
     fi
 
     folder_name=$(basename "${folder}")
-    target_sesh="${sessions_dir}/${folder_name}_sessions"
+    folder_sesh="${sessions_dir}/${folder_name}_sessions"
 
-    if [ ! -d "$target_sesh" ]; then
-        mkdir -p  "$target_sesh"
+    if [ ! -d "$folder_sesh" ]; then
+        mkdir -p  "$folder_sesh"
     fi
 
-    cd "$target_sesh"
+    cd "$folder_sesh"
     count="$(ls -1 | wc -l)"
     count=$((count+1))
     cd ../
-    sesh_file="${target_sesh}/session_${count}.txt"
+    sesh_file="${folder_sesh}/session_${count}.txt"
     {
         echo "$(date +%d/%m/%Y_%T)"
         echo
@@ -48,7 +48,7 @@ record_session() {
         df -h
     } > "$sesh_file"
 
-    echo "Sesiunea a fost inregistrata cu succes in ${target_sesh}"
+    echo "Sesiunea a fost inregistrata cu succes in ${folder_sesh}"
 }
 
 compare_sessions() {
@@ -98,11 +98,11 @@ compare_sessions() {
         else
             echo "Nu exista modificari"
         fi
-     } >> "$report_file"
+    } >> "$report_file"
 
-     rm /tmp/ls1.txt /tmp/ls2.txt /tmp/df1.txt /tmp/df2.txt /tmp/ls_diff.txt /tmp/df_diff.txt
+    rm /tmp/ls1.txt /tmp/ls2.txt /tmp/df1.txt /tmp/df2.txt /tmp/ls_diff.txt /tmp/df_diff.txt
 
-     echo "Raportul a fost generat cu succes in ${reports_dir}"
+    echo "Raportul a fost generat cu succes in ${reports_dir}"
 }
 
 menu() {
@@ -131,7 +131,7 @@ echo "2.) Compara 2 sesiuni"
 echo "3.) Iesi"
 
 while true; do
-     menu
+    menu
 done
 
 exit 0
