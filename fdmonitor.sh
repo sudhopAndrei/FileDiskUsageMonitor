@@ -1,3 +1,5 @@
+#!/bin/bash
+
 script_dir="$HOME/File&DiskUsageMonitor"
 sessions_dir="${script_dir}/sessions"
 reports_dir="${script_dir}/reports"
